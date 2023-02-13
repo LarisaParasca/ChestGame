@@ -16,14 +16,12 @@ export class Game {
 
     // calling function that initialize the screen
     run() { 
-        console.log("intra in run")
         this.drawMainScreen();
     
      
     }
 
     drawMainScreen() {
-        console.log("main screen is draw");
         this.container.addChild(this.mainScreenContainer); // am pus main screen container pe stage
         this.uiElements.drawUI(); // am call uit o functie din noua instanta pe care am creeat o
                                   // practic asa leg game file de UI file, cum faceam in game de la esa
