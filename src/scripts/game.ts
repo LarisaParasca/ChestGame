@@ -1,32 +1,25 @@
 import * as PIXI from 'pixi.js'
 import { UI } from './UI';
 
-// create container for main screen. Create instance of UI that creates eveything I need
 export class Game {
-    protected container: PIXI.Container;
-    protected mainScreenContainer : PIXI.Container;
-    protected uiElements: UI; //am definit uiElements
+  protected container: PIXI.Container;
+  protected mainScreenContainer: PIXI.Container;
+  protected uiElements: UI; 
 
-    constructor(stage: PIXI.Container) {
-        this.container = stage;
-        this.mainScreenContainer = new PIXI.Container();
-        this.uiElements = new UI(this.mainScreenContainer); //am creat o noua instanta a ui elements
-    
-    }
+  constructor(stage: PIXI.Container) {
+    this.container = stage;
+    this.mainScreenContainer = new PIXI.Container();
+    this.uiElements = new UI(this.mainScreenContainer); 
 
-    // calling function that initialize the screen
-    run() { 
-        this.drawMainScreen();
-    
-     
-    }
+  }
 
-    drawMainScreen() {
-        this.container.addChild(this.mainScreenContainer); // am pus main screen container pe stage
-        this.uiElements.drawUI(); // am call uit o functie din noua instanta pe care am creeat o
-                                  // practic asa leg game file de UI file, cum faceam in game de la esa
-        
-    }
+  run() {
+    this.drawMainScreen();
+  }
 
-    
+  drawMainScreen() {
+    this.container.addChild(this.mainScreenContainer); 
+    this.uiElements.drawUI(); 
+  }
+
 }
