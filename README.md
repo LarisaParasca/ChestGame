@@ -1,4 +1,4 @@
-Chest Game for NeoGame test task.
+Chest Game
 
 In order to have the game running, please:
 - clone git repository

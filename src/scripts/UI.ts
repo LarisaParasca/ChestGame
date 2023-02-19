@@ -5,8 +5,8 @@ import AppDefinitions from './definitions';
 
 export class UI {
 
-  protected container: PIXI.Container;
-  public playButton: PIXI.Graphics;
+  public container: PIXI.Container; // main Containe
+  public button: PIXI.Container; // new container for button
   public chest1 !: Chest;
   public chest2 !: Chest;
   public chest3 !: Chest;
@@ -16,7 +16,7 @@ export class UI {
 
   constructor(container: PIXI.Container) {
     this.container = container;
-    this.playButton = new PIXI.Graphics();
+    this.button = new PIXI.Container();
   }
 
   drawUI() {
@@ -24,7 +24,6 @@ export class UI {
     this.drawTexts();
     this.drawPlayButton();
     this.createChests();
-
   }
 
   drawBackgroundForMainScreen() {
@@ -43,18 +42,27 @@ export class UI {
   }
 
   drawPlayButton() {
-    // let playButtonImg : PIXI.Sprite = PIXI.Sprite.from('images/playy.png');
-    // this.container.addChild(playButtonImg);
+    let buttonBg = new PIXI.Graphics(); // graphics for green circle
+    buttonBg.beginFill(0x00FF00);
+    buttonBg.drawCircle(0, 0, 35);
+    buttonBg.endFill();
+    
+    var playTriangle = new PIXI.Graphics();
+    playTriangle.lineStyle(2, 0x000000);
+    playTriangle.moveTo(0, 0);
+    playTriangle.lineTo(25, 25);
+    playTriangle.lineTo(0, 50);
+    playTriangle.lineTo(0, 0);
+    playTriangle.position.set(-5, -24);
 
-    this.playButton = new PIXI.Graphics; //maybe an image but for now it s ok like this for now
-    this.playButton.beginFill(0x00FF00);
-    this.playButton.drawRect(0, 0, 100, 60);
-    this.playButton.endFill();
-    this.playButton.position.set(330, 450);
-    this.playButton.cursor = 'pointer';
-    this.playButton.interactive = true;
-    this.playButton.on(AppDefinitions.CLICK_EVENT, this.onClickPlayButton.bind(this));
-    this.container.addChild(this.playButton);
+    this.button.addChild(buttonBg, playTriangle); //adds the shapes on the button container
+    this.button.position.set(360, 490); // set position for button container
+   
+    this.button.cursor = 'pointer'; 
+    this.button.interactive = true;
+    this.button.on(AppDefinitions.CLICK_EVENT, this.onClickPlayButton.bind(this)); //connect button to a click event
+
+    this.container.addChild(this.button); //adds the button container on the main container
   }
 
 
@@ -109,12 +117,12 @@ export class UI {
       visible: true
     })
 
-    this.chest1.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this)); //connecting all chests to a click event
-    this.chest2.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this));
-    this.chest3.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this));
-    this.chest4.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this));
-    this.chest5.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this));
-    this.chest6.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this));
+    this.chest1.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 1)); //connecting all chests to a click event
+    this.chest2.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 2));
+    this.chest3.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 3));
+    this.chest4.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 4));
+    this.chest5.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 5));
+    this.chest6.on(AppDefinitions.CLICK_EVENT, this.onClickChest.bind(this, 6));
 
     this.chest1.cursor = 'pointer';  // setting the hand cursor to all chests 
     this.chest2.cursor = 'pointer';
@@ -128,20 +136,20 @@ export class UI {
 
   onClickPlayButton() {
     console.log('play button clicked');
-    this.playButton.interactive = false;
+    this.button.interactive = false;
     let controller: Controller = new Controller();
     controller.setActivityForChests(this, true);
     controller.setVisibilityForChests(this, true);
   }
 
-  onClickChest() {
+  onClickChest(chestNumber: number) {
     console.log('chest clicked');
-    this.playButton.interactive = false; // disables play button
+    this.button.interactive = false; // disables play button
 
     let controller: Controller = new Controller();
     controller.setActivityForChests(this, false); // disables the chests
-    controller.setVisibilityForChests(this, false); // hides the chests
-    // method for the chosen chest to be available
+    controller.setVisibilityForChests(this, false, chestNumber); // hides the chests
+
 
     controller.determineWin();
   }

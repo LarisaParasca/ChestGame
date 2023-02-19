@@ -18,14 +18,38 @@ export default class Controller {
     ui.chest6.interactive = activeState;
   }
 
-  setVisibilityForChests(ui: UI, visibleState: boolean) {
+  setVisibilityForChests(ui: UI, visibleState: boolean, chestNumberToKeepVisible: number = 0) {
     ui.chest1.visible = visibleState;
     ui.chest2.visible = visibleState;
     ui.chest3.visible = visibleState;
     ui.chest4.visible = visibleState;
     ui.chest5.visible = visibleState;
     ui.chest6.visible = visibleState;
-  }
+    
+    // If a chestNumberToKeepVisible was provided, set that chest to be visible
+    if (chestNumberToKeepVisible) {
+        switch (chestNumberToKeepVisible) {
+            case 1: 
+                ui.chest1.visible = true;
+                break;
+            case 2: 
+                ui.chest2.visible = true;
+                break;
+            case 3: 
+                ui.chest3.visible = true;
+                break;
+            case 4: 
+                ui.chest4.visible = true;
+                break;
+            case 5: 
+                ui.chest5.visible = true;
+                break;
+            case 6: 
+                ui.chest6.visible = true;
+                break;
+        }
+    }
+}
 
   determineWin() {
     let randomNumber = Math.floor(Math.random() * 2);
