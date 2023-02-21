@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js'
+import Animation from './animation';
+import animation from './animation';
 import Chest from './chest';
 import AppDefinitions from './definitions';
 import { UI } from './UI';
@@ -54,8 +56,8 @@ export default class Controller {
   determineWin() {
     let randomNumber = Math.floor(Math.random() * 2);
     let result = randomNumber === 1;
-    console.log(result);
-    result ? this.determineWinOrBonus() : this.playLoseAnimation();
+    let animation = new Animation();
+    result ? this.determineWinOrBonus() : animation.playLoseAnimation();
     return result;
   }
 
@@ -63,22 +65,11 @@ export default class Controller {
     console.log("chosen chest is a win");
     let randomWin = Math.floor(Math.random() * 2);
     let result = randomWin === 1;
-    result ? this.playNormalWinAnimation() : this.playBonusWinAnimation();
+    let animation = new Animation();
+    result ? animation.playNormalWinAnimation() : animation.playBonusWinAnimation();
     return result;
   }
 
-  playNormalWinAnimation() {
-    console.log('normal win')
-    console.log("plays normal win animation")
-  }
 
-  playBonusWinAnimation() {
-    console.log('bonus win')
-    console.log('plays bonus win animation ')
-  }
-
-  playLoseAnimation() {
-    console.log("chosen chest is not a win");
-    
-  }
+  
 }
